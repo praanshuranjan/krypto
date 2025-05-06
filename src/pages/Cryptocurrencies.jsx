@@ -82,9 +82,15 @@ export default function SimpleCryptoDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto p-4">
-      <button 
+      
+      <header className="mb-8 flex justify-between">
+        <div>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Crypto Dashboard</h1>
+        <p className="text-gray-600">Real-time cryptocurrency market data</p>
+        </div>
+        <button 
         onClick={handleBackClick}
-        className="mb-4 flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+        className="mb-4 m-5 flex items-center text-blue-600 hover:text-blue-800 transition-colors"
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -100,13 +106,10 @@ export default function SimpleCryptoDashboard() {
             d="M10 19l-7-7m0 0l7-7m-7 7h18" 
           />
         </svg>
-        Back to Home
+        Back
       </button>
-      
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Crypto Dashboard</h1>
-        <p className="text-gray-600">Real-time cryptocurrency market data</p>
       </header>
+      
 
       <div className="mb-6">
         <div className="relative">
