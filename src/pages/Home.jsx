@@ -31,22 +31,22 @@ export default function Home() {
 
   const features = [
     {
-      icon: <TrendingUp className="h-8 w-8 text-emerald-600 dark:text-emerald-500" />,
+      icon: <TrendingUp className="h-8 w-8 text-emerald-400" />,
       title: "Real-Time Price Updates",
       description: "Get the latest cryptocurrency prices updated in real-time from trusted sources."
     },
     {
-      icon: <BarChart3 className="h-8 w-8 text-emerald-600 dark:text-emerald-500" />,
+      icon: <BarChart3 className="h-8 w-8 text-emerald-400" />,
       title: "Detailed Analytics",
       description: "Access comprehensive market data, price history, and performance metrics."
     },
     {
-      icon: <Clock className="h-8 w-8 text-emerald-600 dark:text-emerald-500" />,
+      icon: <Clock className="h-8 w-8 text-emerald-400" />,
       title: "Historical Data",
       description: "View historical price movements and analyze trends over time."
     },
     {
-      icon: <Globe className="h-8 w-8 text-emerald-600 dark:text-emerald-500" />,
+      icon: <Globe className="h-8 w-8 text-emerald-400" />,
       title: "Global Market Coverage",
       description: "Track cryptocurrencies from exchanges around the world in one place."
     }
@@ -92,8 +92,8 @@ export default function Home() {
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
                 <a href="/cryptocurrencies">
-                  <button className="bg-emerald-600 flex items-center justify-center rounded-xl p-2 hover:bg-emerald-700 text-white">
-                    View Cryptocurrencies <ArrowRight className="ml-2 h-4 w-4" />
+                  <button className="bg-emerald-600 flex items-center justify-center rounded-2xl px-6 py-3 hover:bg-emerald-500 text-white font-medium shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105">
+                    View Cryptocurrencies <ArrowRight className="ml-2 h-5 w-5" />
                   </button>
                 </a>
               </div>
@@ -113,17 +113,17 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-50 dark:bg-slate-900">
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-slate-900">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex flex-col items-center justify-center space-y-4 text-center">
             <div className="space-y-2">
-              <div className="inline-block rounded-lg bg-emerald-100 dark:bg-emerald-900/20 px-3 py-1 text-sm text-emerald-700 dark:text-emerald-400">
+              <div className="inline-block rounded-lg bg-emerald-900/20 px-3 py-1 text-sm text-emerald-400">
                 Features
               </div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-slate-900 dark:text-white">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-white">
                 Everything you need to track crypto
               </h2>
-              <p className="max-w-[900px] text-slate-600 dark:text-slate-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              <p className="max-w-[900px] text-slate-300 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Our platform provides comprehensive tools to monitor and analyze cryptocurrency markets in real-time.
               </p>
             </div>
@@ -132,12 +132,12 @@ export default function Home() {
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all duration-300"
+                className="flex items-start gap-4 p-4 rounded-xl bg-slate-800 border border-slate-700"
               >
                 <div className="mt-1">{feature.icon}</div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">{feature.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <h3 className="text-xl font-bold text-white">{feature.title}</h3>
+                  <p className="text-slate-300">
                     {feature.description}
                   </p>
                 </div>
@@ -158,9 +158,9 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <a href="/cryptocurrencies">
-                <button className="bg-emerald-600 flex items-center justify-center rounded-xl p-2 hover:bg-emerald-700 text-white">
+                <button className="bg-emerald-600 flex items-center justify-center rounded-2xl px-6 py-3 hover:bg-emerald-500 text-white font-medium shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105">
                   View All Cryptocurrencies
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                  <ArrowRight className="ml-2 h-5 w-5" />
                 </button>
               </a>
             </div>
@@ -175,7 +175,7 @@ export default function Home() {
               <BarChart3 className="h-6 w-6" />
               <span className="text-lg font-bold">CryptoTracker</span>
             </div>
-            <p className="text-sm">© {new Date().getFullYear()} CryptoTracker. All rights reserved.</p>
+            <p className="text-sm">©️ {new Date().getFullYear()} CryptoTracker. All rights reserved.</p>
           </div>
         </div>
       </footer>

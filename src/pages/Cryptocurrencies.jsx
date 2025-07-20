@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SimpleCryptoDashboard() {
+  const navigate = useNavigate();
   const [cryptos, setCryptos] = useState([]);
   const [filteredCryptos, setFilteredCryptos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -55,7 +57,11 @@ export default function SimpleCryptoDashboard() {
   }, [searchTerm, cryptos]);
 
   const handleBackClick = () => {
-    window.location.href = "/";
+    navigate("/");
+  };
+
+  const handleCryptoClick = (cryptoId) => {
+    navigate(`/crypto/${cryptoId}`);
   };
 
   if (isLoading) {
@@ -72,7 +78,7 @@ export default function SimpleCryptoDashboard() {
         <p className="text-red-600 text-lg">{error}</p>
         <button
           onClick={fetchCryptoData}
-          className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          className="mt-4 bg-emerald-600 text-white px-6 py-3 rounded-xl hover:bg-emerald-500 font-medium shadow-lg hover:shadow-emerald-500/25 transition-all duration-300 transform hover:scale-105"
         >
           Try Again
         </button>
@@ -85,12 +91,12 @@ export default function SimpleCryptoDashboard() {
       
       <header className="mb-8 flex justify-between">
         <div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Crypto Dashboard</h1>
-        <p className="text-gray-600">Real-time cryptocurrency market data</p>
+        <h1 className="text-3xl font-bold text-white mb-2">Crypto Dashboard</h1>
+        <p className="text-slate-300">Real-time cryptocurrency market data</p>
         </div>
         <button 
         onClick={handleBackClick}
-        className="mb-4 m-5 flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+        className="mb-4 m-5 flex items-center text-emerald-400 hover:text-emerald-300 transition-all duration-300 px-4 py-2 rounded-xl hover:bg-emerald-400/10"
       >
         <svg 
           xmlns="http://www.w3.org/2000/svg" 
@@ -115,12 +121,12 @@ export default function SimpleCryptoDashboard() {
         <div className="relative">
           <input
             placeholder="Search cryptocurrencies..."
-            className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 pl-10 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-slate-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <svg 
-            className="absolute left-3 top-3 w-5 h-5 text-gray-400"
+            className="absolute left-3 top-3 w-5 h-5 text-slate-400"
             xmlns="http://www.w3.org/2000/svg" 
             fill="none" 
             viewBox="0 0 24 24" 
@@ -138,24 +144,28 @@ export default function SimpleCryptoDashboard() {
 
       {filteredCryptos.length === 0 ? (
         <div className="text-center py-10">
-          <p className="text-gray-500 text-lg">No cryptocurrencies found matching your search.</p>
+          <p className="text-slate-400 text-lg">No cryptocurrencies found matching your search.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-gray-100 text-left">
-                <th className="p-4">#</th>
-                <th className="p-4">Coin</th>
-                <th className="p-4">Price</th>
-                <th className="p-4">24h Change</th>
-                <th className="p-4">Market Cap</th>
+              <tr className="bg-slate-800 text-left">
+                <th className="p-4 text-slate-300">#</th>
+                <th className="p-4 text-slate-300">Coin</th>
+                <th className="p-4 text-slate-300">Price</th>
+                <th className="p-4 text-slate-300">24h Change</th>
+                <th className="p-4 text-slate-300">Market Cap</th>
               </tr>
             </thead>
             <tbody>
               {filteredCryptos.map((crypto) => (
-                <tr key={crypto.id} className="border-b border-gray-200 hover:bg-gray-50">
-                  <td className="p-4">{crypto.market_cap_rank}</td>
+                <tr 
+                  key={crypto.id} 
+                  className="border-b border-slate-700 cursor-pointer"
+                  onClick={() => handleCryptoClick(crypto.id)}
+                >
+                  <td className="p-4 text-white">{crypto.market_cap_rank}</td>
                   <td className="p-4">
                     <div className="flex items-center">
                       <img 
@@ -164,19 +174,19 @@ export default function SimpleCryptoDashboard() {
                         className="w-8 h-8 mr-3" 
                       />
                       <div>
-                        <p className="font-medium">{crypto.name}</p>
-                        <p className="text-gray-500 text-sm">{crypto.symbol.toUpperCase()}</p>
+                        <p className="font-medium text-white">{crypto.name}</p>
+                        <p className="text-slate-400 text-sm">{crypto.symbol.toUpperCase()}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="p-4 font-medium">
+                  <td className="p-4 font-medium text-white">
                     ${crypto.current_price.toLocaleString()}
                   </td>
-                  <td className={`p-4 ${crypto.price_change_percentage_24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                  <td className={`p-4 ${crypto.price_change_percentage_24h >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
                     {crypto.price_change_percentage_24h >= 0 ? '↑' : '↓'} 
                     {Math.abs(crypto.price_change_percentage_24h).toFixed(2)}%
                   </td>
-                  <td className="p-4">
+                  <td className="p-4 text-white">
                     ${crypto.market_cap.toLocaleString()}
                   </td>
                 </tr>
@@ -186,7 +196,7 @@ export default function SimpleCryptoDashboard() {
         </div>
       )}
 
-      <footer className="mt-10 text-center text-gray-500 text-sm">
+      <footer className="mt-10 text-center text-slate-400 text-sm">
         <p>Data updates automatically every 60 seconds</p>
         <p className="mt-1">Last updated: {new Date().toLocaleTimeString()}</p>
       </footer>
