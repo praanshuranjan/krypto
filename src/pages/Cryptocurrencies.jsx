@@ -8,6 +8,8 @@ export default function SimpleCryptoDashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const fetchCryptoData = async () => {
     try {
@@ -16,7 +18,6 @@ export default function SimpleCryptoDashboard() {
       const response = await fetch(
         "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h"
       );
-
 
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -51,8 +52,10 @@ export default function SimpleCryptoDashboard() {
           crypto.symbol.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCryptos(filtered);
+      setCurrentPage(1); // Reset to first page on search
     } else {
       setFilteredCryptos(cryptos);
+      setCurrentPage(1); // Reset to first page on clear
     }
   }, [searchTerm, cryptos]);
 
@@ -62,6 +65,18 @@ export default function SimpleCryptoDashboard() {
 
   const handleCryptoClick = (cryptoId) => {
     navigate(`/crypto/${cryptoId}`);
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredCryptos.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const paginatedCryptos = filteredCryptos.slice(startIdx, endIdx);
+
+  const handlePageChange = (page) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
   };
 
   if (isLoading) {
@@ -147,6 +162,7 @@ export default function SimpleCryptoDashboard() {
           <p className="text-slate-400 text-lg">No cryptocurrencies found matching your search.</p>
         </div>
       ) : (
+        <>
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
@@ -159,7 +175,7 @@ export default function SimpleCryptoDashboard() {
               </tr>
             </thead>
             <tbody>
-              {filteredCryptos.map((crypto) => (
+              {paginatedCryptos.map((crypto) => (
                 <tr 
                   key={crypto.id} 
                   className="border-b border-slate-700 cursor-pointer"
@@ -174,7 +190,7 @@ export default function SimpleCryptoDashboard() {
                         className="w-8 h-8 mr-3" 
                       />
                       <div>
-                        <p className="font-medium text-white">{crypto.name}</p>
+                        <p className="font-medium text-lg text-white">{crypto.name}</p>
                         <p className="text-slate-400 text-sm">{crypto.symbol.toUpperCase()}</p>
                       </div>
                     </div>
@@ -194,6 +210,43 @@ export default function SimpleCryptoDashboard() {
             </tbody>
           </table>
         </div>
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center mt-8">
+          <div className="flex gap-2 px-4 py-2 bg-slate-800/70 rounded-2xl shadow-lg border border-slate-700">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="flex items-center px-2 py-1 rounded-full text-slate-400 hover:bg-emerald-500/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Previous page"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i + 1}
+                onClick={() => handlePageChange(i + 1)}
+                className={`px-3 py-1 rounded-full font-semibold transition shadow-sm
+                  ${currentPage === i + 1
+                    ? 'bg-emerald-500 text-white shadow-emerald-400/30 shadow-lg scale-105'
+                    : 'bg-slate-900 text-slate-300 hover:bg-emerald-500/20 hover:text-emerald-400'}
+                `}
+                style={{ minWidth: 36 }}
+                aria-current={currentPage === i + 1 ? 'page' : undefined}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="flex items-center px-2 py-1 rounded-full text-slate-400 hover:bg-emerald-500/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label="Next page"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </div>
+        </div>
+        </>
       )}
 
       <footer className="mt-10 text-center text-slate-400 text-sm">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import image from "../images/michael-fortsch-gRAS87wSVCs-unsplash.jpg"
+import image from "../images/cryptobitcoin.gif"
 import { ArrowRight, BarChart3, Clock, Globe, TrendingUp, ChevronUp, ChevronDown, Coins, Users, Shield, Zap, Star, TrendingDown, Activity } from "lucide-react"
 
 export default function Home() {
@@ -123,13 +123,11 @@ export default function Home() {
               </div>
             </div>
             <div className="flex items-center justify-center">
-              <div className="relative w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px]">
+              <div className="relative w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] flex items-center justify-center">
                 <img
                   src={image}
                   alt="Crypto Dashboard"
-                  width={600}
-                  height={600}
-                  className="object-cover rounded-lg shadow-lg"
+                  className="object-contain w-full h-full rounded-lg shadow-lg"
                 />
               </div>
             </div>
